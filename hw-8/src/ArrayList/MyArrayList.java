@@ -8,6 +8,7 @@ public class MyArrayList<T>{
     private static final int defoltSize = 10;
     private static final Object[] emptyArray = {};
     private int index  = 0;
+    private int size = 0;
 
     public int size() {
         return index;
@@ -15,6 +16,7 @@ public class MyArrayList<T>{
 
     public MyArrayList(){
         array = new Object[defoltSize];
+        size = defoltSize;
     }
 
 
@@ -30,6 +32,7 @@ public class MyArrayList<T>{
             Object[] newArray = new Object[newSize];
             System.arraycopy(array,0,newArray,0,array.length);
             array = newArray;
+            size = newSize;
         }
     }
 
@@ -45,12 +48,14 @@ public class MyArrayList<T>{
         if (i < 0 && i > index) {
             throw new IllegalArgumentException("Illegal index");
         }else {
-            Object[] newArray = new Object[index - 1];
-            System.arraycopy(array,0,newArray,0,i);
-            System.arraycopy(array,i+1,newArray,i,array.length - i - 1);
+            Object[] newArray = new Object[size];
+            System.arraycopy(array, 0, newArray, 0, i);
+            System.arraycopy(array, i + 1, newArray, i, array.length - i - 1);
             array = newArray;
+            index--;
         }
     }
+
 
     public boolean isEmpty(){
         if (array.length > 0){

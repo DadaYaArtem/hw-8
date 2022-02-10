@@ -5,19 +5,16 @@ import java.util.List;
 
 public class MyArrayListTests {
     public static void main(String[] args) {
-
+        List b = new ArrayList();
         MyArrayList<Integer> list = new MyArrayList();
-        List a = new ArrayList();
-        for (int i = 0; i < 10; i++) {
-            list.add(i);
-        }
+        list.add(5);
+        System.out.println(list);
+        list.remove(0);
         System.out.println(list);
         System.out.println(list.size());
-        System.out.println(list.get(4));
-        list.remove(5);
-        System.out.println(list.isEmpty());
-        System.out.println(list.contains(6));
+        list.add(6);
         System.out.println(list);
-        list.clear();
+        list.remove(0);
+        System.out.println(list);
     }
 }

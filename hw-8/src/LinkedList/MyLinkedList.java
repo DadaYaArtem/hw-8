@@ -55,6 +55,7 @@ public class MyLinkedList<T> {
         }
         node.prev.next = node.next;
         node.next.prev = node.prev;
+        size--;
     }
 
     public String toString(){

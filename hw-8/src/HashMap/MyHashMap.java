@@ -1,21 +1,21 @@
 package HashMap;
 
+import HashMap.Node;
+
 public class MyHashMap<K, V> {
-    public static final int defoltSize = 16;
+    private static final int defoltSize = 16;
     private Node<K, V>[] buckets;
     private int size;
 
-    public MyHashMap(int size) {
-        buckets = new Node[size];
+    public MyHashMap() {
+        Node<K, V>[] node = (Node<K, V>[]) new Node[defoltSize];
+        buckets = node;
     }
 
-    public MyHashMap() {
-        this(defoltSize);
-    }
 
     public void put(K key, V value) {
         Node<K, V> node = new Node<>(key, value, null);
-        int bucket = getHash(key) % buckets.length;
+        int bucket = key.hashCode() % buckets.length;
         Node<K, V> check = buckets[bucket];
         if (check == null) {
             buckets[bucket] = node;
@@ -39,6 +39,42 @@ public class MyHashMap<K, V> {
         }
     }
 
+
+    public void remove(K key) {
+        int index = key.hashCode() % buckets.length;
+        Node<K, V> node = buckets[index];
+        Node<K, V> previous = null;
+
+        while (true) {
+            if (previous == null) {
+                buckets[index] = null;
+            } else {
+                previous.next = node.next;
+                node.next = null;
+            }
+            size--;
+
+            break;
+        }
+
+        previous = node;
+        node = node.next;
+    }
+
+
+    public void clear() {
+        Node<K, V>[] node = buckets;
+        for (int i = 0; i < node.length; i++) {
+            node[i] = null;
+        }
+        size = 0;
+    }
+
+
+    public int size() {
+        return size;
+    }
+
     public V get(K key) {
         if (key == null) {
             throw new IllegalArgumentException("Null Key!");
@@ -53,38 +89,5 @@ public class MyHashMap<K, V> {
         return null;
     }
 
-    public int size() {
-        return size;
-    }
-
-    public void clear() {
-        Node<K, V>[] node = buckets;
-        for (int i = 0; i < node.length; i++) {
-            node[i] = null;
-        }
-        size = 0;
-    }
-
-    public boolean remove(K key) {
-        int index = getHash(key) % buckets.length;
-        if (buckets[index] == null){
-            return false;
-        }
-        for (int i = 0; i < size; i++) {
-            if (buckets[i].getKey().equals(key)) {
-                buckets[i] = null;
-                size--;
-                for (int j = i; i < size; i++) {
-                    buckets[i] = buckets[i + 1];
-                }
-            }
-        }
-        return true;
-    }
-
-
-    private int getHash(K key) {
-        return key.hashCode();
-    }
 
 }

@@ -10,34 +10,32 @@ public class MyStak<T> {
     private int defaultSize = 16;
 
     public MyStak() {
-        array = new Object[defaultSize];
-        size = defaultSize;
+        array = new Object[]{};
+        size = 0;
         top = -1;
     }
 
-    public MyStak(int size) {
-        array = new Object[size];
-        this.size = size;
-        top = -1;
-    }
+//    public MyStak(int size) {
+//        array = new Object[size];
+//        this.size = size;
+//        top = -1;
+//    }
 
     public int size() {
         return top + 1;
     }
 
     public void push(T value) {
-        if (top == size - 1) {
-            throw new IndexOutOfBoundsException();
-        }
+        resize();
         array[++top] = value;
     }
 
     public T remove(int i){
-        if (i < 0 || i > size){
+        if (i < 0 || i > size()){
             throw new NoSuchElementException();
         }
         T toRemove = (T) array[i];
-        Object[] newArray = new Object[size];
+        Object[] newArray = new Object[size()-1];
         System.arraycopy(array,0,newArray,0,i);
         System.arraycopy(array,i+1,newArray,i,size()-i-1);
         array = newArray;
@@ -46,7 +44,7 @@ public class MyStak<T> {
     }
 
     public void clear(){
-        array = new Object[size];
+        array = new Object[size()];
         top = -1;
     }
 
@@ -61,10 +59,12 @@ public class MyStak<T> {
         if (isEmpty()){
             throw new NoSuchElementException();
         }
-        Object[] newArray = new Object[size];
+        T toRemove = (T) array[top];
+        Object[] newArray = new Object[size()-1];
         System.arraycopy(array,0,newArray,0,size()-1);
         array = newArray;
-        return (T) array[top--];
+        top--;
+        return (T) toRemove;
     }
 
     public boolean isEmpty() {
@@ -85,6 +85,16 @@ public class MyStak<T> {
 //        System.out.println("Inserting " + x);
 //
 //
+
+    public void resize(){
+        int a = top + 1;
+        int b = top + 2;
+        Object[] newArray = new Object[b];
+        System.arraycopy(array,0,newArray,0,a);
+        array = newArray;
+    }
+
+
     @Override
     public String toString() {
         return Arrays.toString(array);

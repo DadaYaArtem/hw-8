@@ -12,16 +12,11 @@ public class MyStackTests {
         }
         System.out.println(stak);
         System.out.println(stak.size());
-        stak.clear();
-        for (int i = 0 ; i < 10; i++){
-            stak.push(i);
-        }
         System.out.println(stak.remove(5));
         System.out.println(stak);
         System.out.println(stak.size() + " size");
         System.out.println(stak.peek() + " peek");
         System.out.println(stak.pop() + " pop");
         System.out.println(stak);
-        System.out.println(stak.size());
     }
 }
